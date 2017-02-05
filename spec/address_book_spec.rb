@@ -132,4 +132,14 @@ RSpec.describe AddressBook do
       expect(entry).to be_nil
     end
   end
+
+  describe "#nuke" do
+    it "removes all searches" do
+      book = AddressBook.new
+      book.import_from_csv("entries.csv")
+      expect(book.length).to eq(5)
+      book.nuke
+      expect(book.length).to eq(0)
+    end
+  end
 end
