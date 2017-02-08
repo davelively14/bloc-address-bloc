@@ -14,6 +14,7 @@ class MenuController
     puts "3 - Search for an entry"
     puts "4 - import entries from a CSV"
     puts "5 - Exit"
+    puts "6 - Screw it up"
     print "Enter your selection: "
 
     selection = gets.to_i
@@ -38,11 +39,19 @@ class MenuController
       when 5
         puts "Good-bye!"
         exit(0)
+      when 6
+        add_fake_entry
+        puts "Added bad entry"
+        main_menu
       else
         system "clear"
         puts "Sorry, that is not a valid input"
         main_menu
     end
+  end
+
+  def add_fake_entry
+      address_book.entries.push("invalid entry")
   end
 
   def view_all_entries
