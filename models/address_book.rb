@@ -2,8 +2,6 @@ require_relative 'entry'
 require 'csv'
 
 class AddressBook
-  attr_reader :entries
-
   def initialize
     @entries = []
   end
@@ -20,6 +18,22 @@ class AddressBook
     @entries.insert(index, Entry.new(name, phone_number, email))
   end
 
+  def delete_entry(entry)
+    @entries.delete(entry)
+  end
+
+  def get_entries
+    return @entries.clone
+  end
+
+  def get_entry(entry)
+    return @entries[entry] ? @entries[entry].clone : nil
+  end
+
+  def count_entries
+    return @entries.count
+  end
+
   def import_from_csv(file_name)
     csv_text = File.read(file_name)
     csv = CSV.parse(csv_text, headers: true, skip_blanks: true)
@@ -32,14 +46,14 @@ class AddressBook
 
   def binary_search(name)
     lower = 0
-    upper = entries.length - 1
+    upper = @entries.length - 1
 
     while lower <= upper
       mid = (lower + upper) / 2
-      mid_name = entries[mid].name
+      mid_name = @entries[mid].name
 
       if name == mid_name
-        return entries[mid]
+        return @entries[mid]
       elsif name < mid_name
         upper = mid - 1
       else

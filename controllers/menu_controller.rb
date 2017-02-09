@@ -8,13 +8,12 @@ class MenuController
   end
 
   def main_menu
-    puts "Main Menu - #{@address_book.entries.count} entries"
+    puts "Main Menu - #{@address_book.count_entries} entries"
     puts "1 - View all entries"
     puts "2 - Create an entry"
     puts "3 - Search for an entry"
     puts "4 - import entries from a CSV"
     puts "5 - Exit"
-    puts "6 - Screw it up"
     print "Enter your selection: "
 
     selection = gets.to_i
@@ -39,10 +38,6 @@ class MenuController
       when 5
         puts "Good-bye!"
         exit(0)
-      when 6
-        add_fake_entry
-        puts "Added bad entry"
-        main_menu
       else
         system "clear"
         puts "Sorry, that is not a valid input"
@@ -50,12 +45,8 @@ class MenuController
     end
   end
 
-  def add_fake_entry
-      address_book.entries.push("invalid entry")
-  end
-
   def view_all_entries
-    address_book.entries.each do |entry|
+    address_book.get_entries.each do |entry|
       system "clear"
       puts entry.to_s
       entry_submenu(entry)
@@ -140,7 +131,7 @@ class MenuController
   end
 
   def delete_entry(entry)
-    address_book.entries.delete(entry)
+    address_book.delete_entry(entry)
     puts "#{entry.name} has been deleted"
   end
 
